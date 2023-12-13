@@ -10,8 +10,9 @@ import { join } from 'path';
 import { GrpcService } from './services/user.service';
 import { GrpcController } from './grpc.controller';
 import { RedisController } from './redis.controller';
+import { OacontainerModule } from './oacontainer/oacontainer.module';
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, OacontainerModule],
   controllers: [UsersController, GrpcController, RedisController],
   providers: [
     {
