@@ -2,6 +2,7 @@
 
 To build all apps and packages with internal dependencies:
 Go to root folder and then
+
 pnpm i
 
 npx nx run-many --target=build
