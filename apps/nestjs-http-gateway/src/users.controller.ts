@@ -71,28 +71,35 @@ export class UsersController {
   public async createUser(
     @Body() userRequest: CreateUserDto,
   ): Promise<CreateUserResponseDto> {
-    const createUserResponse: IServiceUserCreateResponse = await firstValueFrom(
-      this.userServiceClient.send('user_create', userRequest),
-    );
-    if (createUserResponse.status !== HttpStatus.CREATED) {
+    try {
+      // const createUserResponse: IServiceUserCreateResponse = await this.userService.createUser(userRequest);
+
+      // if (createUserResponse.status !== HttpStatus.CREATED) {
+      //   throw new HttpException(
+      //     {
+      //       message: createUserResponse.message,
+      //       data: null,
+      //       errors: createUserResponse.errors,
+      //     },
+      //     createUserResponse.status,
+      //   );
+      // }
+
+      return {
+        message: "user created successfully",
+        email:userRequest.email
+      };
+    } catch (error) {
+      // Handle errors, such as validation errors or database errors
       throw new HttpException(
         {
-          message: createUserResponse.message,
+          message: 'User creation failed',
           data: null,
-          errors: createUserResponse.errors,
+          errors: error.message || 'Internal Server Error',
         },
-        createUserResponse.status,
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-
-    return {
-      message: createUserResponse.message,
-      data: {
-        user: createUserResponse.user,
-        token: '',
-      },
-      errors: null,
-    };
   }
 
   @Post('/login')
